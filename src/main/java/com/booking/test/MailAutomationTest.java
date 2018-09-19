@@ -40,10 +40,10 @@ public class MailAutomationTest {
 
 	}
 
-	@Test(testName = "Проверить работу фильтра Показать только доступные варианты", enabled = false)
+	@Test(testName = "Проверить работу фильтра Показать только доступные варианты", enabled = true)
 	public void testAvailableHotelsFilter() {
 		mainPage.openPage();
-		mainPage.setDestination(Constants.ROME);
+		mainPage.setDestination(Constants.MINSK);
 		mainPage.setCheckInDate(DateUtil.getNextSaturday());
 		mainPage.setCheckOutDate(DateUtil.getNextSunday());
 		mainPage.clickCheckPriceButton();
@@ -55,6 +55,22 @@ public class MailAutomationTest {
 		System.out.println("numberOfHotelsAfterFilter = "
 				+ numberOfHotelsAfterFilter);
 		Assert.assertTrue(numberOfHotelsAfterFilter <= numberOfHotels);
+	}
+
+	@Test(testName = "Проверить количество отелей в фильтре с реальным", enabled = true)
+	public void testNumberOfAvailableHotelsWithBreakfast() {
+		mainPage.openPage();
+		mainPage.setDestination(Constants.MINSK);
+		mainPage.setCheckInDate(DateUtil.getNextSaturday());
+		mainPage.setCheckOutDate(DateUtil.getNextSunday());
+		mainPage.clickCheckPriceButton();
+		int numberHotelsWithBreakfast = searchResultsPage
+				.getNumberBreakfastIncluded();
+		searchResultsPage.selectBreakfastIncluded();
+		int numberOfHotelsAfterFilter = searchResultsPage
+				.getNumberOfHotelsFromHead();
+		Assert.assertEquals(numberOfHotelsAfterFilter,
+				numberHotelsWithBreakfast);
 	}
 
 	@AfterMethod

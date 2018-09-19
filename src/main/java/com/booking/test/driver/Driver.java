@@ -12,7 +12,7 @@ public class Driver {
 
 	public static WebDriver startWebDriver() {
 		if (driver == null) {
-			//System.setProperty(Constants.WEBDRIVER, Constants.WEBDRIVER_EXE);
+			// System.setProperty(Constants.WEBDRIVER, Constants.WEBDRIVER_EXE);
 			driver = new ChromeDriver();
 			driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
