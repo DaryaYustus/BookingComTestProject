@@ -10,13 +10,10 @@ public interface Constants {
 	
 	public static final String MINSK = "Минск";
 	
+	public static final String ROME = "Рим";
+	
 	public static final int MIN_HOTELS = 3;
 	
+	public static final String SPACE = " ";
 	
-	
-	
-	
-	
-
-
 }

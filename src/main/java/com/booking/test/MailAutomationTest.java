@@ -1,7 +1,5 @@
 package com.booking.test;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -14,7 +12,7 @@ import com.booking.test.pages.MainPage;
 import com.booking.test.pages.SearchResultsPage;
 import com.booking.test.util.DateUtil;
 
-public class MailAutomationTest implements Constants {
+public class MailAutomationTest {
 
 	private static WebDriver driver;
 
@@ -26,20 +24,37 @@ public class MailAutomationTest implements Constants {
 		driver = Driver.startWebDriver();
 		mainPage = new MainPage(driver);
 		searchResultsPage = new SearchResultsPage(driver);
-
 	}
 
 	@Test(testName = "Hайти как минимум 3 доступных номера в гостинице в минске на двоих на ближайший уикэнд", enabled = true)
 	public void testAvailableHotels() {
 		mainPage.openPage();
-		mainPage.setDestination(MINSK);
+		mainPage.setDestination(Constants.MINSK);
 		mainPage.setCheckInDate(DateUtil.getNextSaturday());
 		mainPage.setCheckOutDate(DateUtil.getNextSunday());
 		mainPage.selectNumberOfAdultGuests(1);
 		mainPage.clickCheckPriceButton();
-		int numberOfHotels = searchResultsPage.numberOfHotels();
-		Assert.assertTrue(numberOfHotels >= MIN_HOTELS);
 
+		int numberOfHotels = searchResultsPage.numberOfHotelsOnPage();
+		Assert.assertTrue(numberOfHotels >= Constants.MIN_HOTELS);
+
+	}
+
+	@Test(testName = "Проверить работу фильтра Показать только доступные варианты", enabled = false)
+	public void testAvailableHotelsFilter() {
+		mainPage.openPage();
+		mainPage.setDestination(Constants.ROME);
+		mainPage.setCheckInDate(DateUtil.getNextSaturday());
+		mainPage.setCheckOutDate(DateUtil.getNextSunday());
+		mainPage.clickCheckPriceButton();
+		int numberOfHotels = searchResultsPage.getNumberOfHotelsFromHead();
+		System.out.println("numberOfHotels = " + numberOfHotels);
+		searchResultsPage.filterByAvailableHotels();
+		int numberOfHotelsAfterFilter = searchResultsPage
+				.getNumberOfHotelsFromHead();
+		System.out.println("numberOfHotelsAfterFilter = "
+				+ numberOfHotelsAfterFilter);
+		Assert.assertTrue(numberOfHotelsAfterFilter <= numberOfHotels);
 	}
 
 	@AfterMethod

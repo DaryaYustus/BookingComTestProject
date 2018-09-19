@@ -100,5 +100,7 @@ public class MainPage extends AbstractPage implements Constants {
 		buttonCheckPrice.click();
 
 	}
+	
+	
 
 }
