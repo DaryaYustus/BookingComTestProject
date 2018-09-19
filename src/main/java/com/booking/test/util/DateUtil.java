@@ -9,8 +9,8 @@ import java.util.Date;
 public class DateUtil {
 
 	public static String getNextSaturday() {
-		Calendar calendar = Calendar.getInstance();
-		while (calendar.get(Calendar.DAY_OF_WEEK) != 7) {
+		Calendar calendar = Calendar.getInstance(); // текущая дата и время в календаре
+		while (calendar.get(Calendar.DAY_OF_WEEK) != 7) {   // берет из салендаря день недели (Воскресенье это 1 день)и сравнивает его с 7 (Субботой)
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		return formateDate(calendar.getTime());
@@ -32,7 +32,7 @@ public class DateUtil {
 	}
 
 	private static String formateDate(Date date) {
-		String newstring = new SimpleDateFormat("dd-MM-yyyy").format(date);
-		return newstring;
+		String formattedDate = new SimpleDateFormat("dd-MM-yyyy").format(date);
+		return formattedDate;
 	}
 }
